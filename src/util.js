@@ -2,7 +2,7 @@ const getNestedObject = (obj, dotSeparatedKeys) => {
   if (dotSeparatedKeys !== undefined && typeof dotSeparatedKeys !== 'string') return undefined;
   if (typeof obj !== 'undefined' && typeof dotSeparatedKeys === 'string') {
     // split on ".", "[", "]", "'", """ and filter out empty elements
-    const splitRegex = /[.\[\]'"]/g; // eslint-disable-line no-useless-escape
+    const splitRegex = /[.['\]"]/g;
     const pathArr = dotSeparatedKeys.split(splitRegex).filter(k => k !== '');
 
     // eslint-disable-next-line no-param-reassign, no-confusing-arrow
@@ -40,13 +40,16 @@ const getSchemaMatch = (obj, objFromSchema) => {
       return true;
     }
   } else if (Object.prototype.toString.call(obj) === '[object Object]') {
-    for (const key in obj) { // eslint-disable-line guard-for-in, no-restricted-syntax
-      if (!getSchemaMatch(obj[key], objFromSchema[key])) {
-        result = false;
-        break;
-      }
-      result = true;
-    }
+        // eslint-disable-next-line no-restricted-syntax
+        for (const key in obj) {
+            if (Object.prototype.hasOwnProperty.call(obj, key)) {
+                if (!getSchemaMatch(obj[key], objFromSchema[key])) {
+                    result = false;
+                    break;
+                }
+                result = true;
+            }
+        }
   } else {
     // istanbul ignore next
     return typeof objFromSchema === typeof obj;
