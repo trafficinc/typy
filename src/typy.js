@@ -87,7 +87,7 @@ class Typy {
     if (this.input) return true;
     return false;
   }
-  
+
   // eslint-disable-next-line class-methods-use-this
   get isTruthyShallow() {
     const values = Object.values(this.input);
@@ -157,6 +157,9 @@ class Typy {
   }
 
   get isString() {
+    if (typeof this.input === 'object' && this.input instanceof String) {
+      return true;
+    }
     if (typeof this.input === 'string') return true;
     return false;
   }

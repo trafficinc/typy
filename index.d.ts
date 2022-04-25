@@ -31,6 +31,8 @@ declare module "typy" {
 		readonly isTrue: boolean
 		readonly isFalse: boolean
 		readonly isTruthy: boolean
+		readonly isTruthyDeep: boolean
+		readonly isTruthyShallow: boolean
 		readonly isFalsy: boolean
 		readonly isObject: boolean
 		readonly isEmptyObject: boolean
@@ -39,7 +41,7 @@ declare module "typy" {
 		readonly isNumber: boolean
 		readonly isArray: boolean
 		readonly isEmptyArray: boolean
-    readonly isFunction: boolean
+        readonly isFunction: boolean
 		readonly isDate: boolean
 		readonly isSymbol: boolean
 		readonly safeObject: any

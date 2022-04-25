@@ -40,16 +40,16 @@ const getSchemaMatch = (obj, objFromSchema) => {
       return true;
     }
   } else if (Object.prototype.toString.call(obj) === '[object Object]') {
-        // eslint-disable-next-line no-restricted-syntax
-        for (const key in obj) {
-            if (Object.prototype.hasOwnProperty.call(obj, key)) {
-                if (!getSchemaMatch(obj[key], objFromSchema[key])) {
-                    result = false;
-                    break;
-                }
-                result = true;
-            }
+    // eslint-disable-next-line no-restricted-syntax
+    for (const key in obj) {
+      if (Object.prototype.hasOwnProperty.call(obj, key)) {
+        if (!getSchemaMatch(obj[key], objFromSchema[key])) {
+          result = false;
+          break;
         }
+        result = true;
+      }
+    }
   } else {
     // istanbul ignore next
     return typeof objFromSchema === typeof obj;

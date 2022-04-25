@@ -94,7 +94,7 @@ describe('Typy', () => {
       });
     });
   });
-  
+
   describe('shallow & deep Truthy', () => {
     test('should test if object is shallow truthy', () => {
       const truthyObject = {
@@ -153,6 +153,16 @@ describe('Typy', () => {
       expect(t({}).isEmptyString === false).toBeTruthy();
     });
 
+    test('should test type for strings with edge cases', () => {
+      // eslint-disable-next-line no-new-wrappers
+      const stringA = new String('A String object');
+      const stringB = 'regular line of text here';
+      expect(t(stringA).isString).toEqual(true);
+      expect(t(stringB).isString).toEqual(true);
+      expect(t(stringB).isString === true).toBeTruthy();
+      expect(t(stringA).isString === true).toBeTruthy();
+    });
+
     test('should test if type is Number', () => {
       let num = 22;
       expect(t(num).isNumber === true).toBeTruthy();
@@ -164,6 +174,15 @@ describe('Typy', () => {
       expect(t(num).isNumber === true).toBeTruthy();
       num = 'number';
       expect(t(num).isNumber === false).toBeTruthy();
+    });
+
+    test('should test if type is Number for edge cases', () => {
+      const num = Number('22');
+      expect(t(num).isNumber).toEqual(true);
+      const notNum = Number(undefined);
+      expect(t(notNum).isNumber).toEqual(false);
+      const notNumTwo = Number('unicorn');
+      expect(t(notNumTwo).isNumber).toEqual(false);
     });
 
     test('should test if type is Boolean', () => {
@@ -288,7 +307,7 @@ describe('Typy', () => {
   describe('Safe String', () => {
     test('should return the string if type is string', () => {
       const str = 'hello there';
-      expect(t(str).safeString === str).toBeTruthy();
+      expect(t(str).safeString === str).toEqual(true);
     });
 
     test('should return empty string if type is not string', () => {
