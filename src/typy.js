@@ -113,7 +113,7 @@ class Typy {
       count: 0,
     };
     // eslint-disable-next-line no-underscore-dangle
-    const t = (input, objectPath) => new Typecheck().t(input, objectPath);
+    const t = (input, objectPath) => new Typy().t(input, objectPath);
     function deepCheck(obj) {
       const values = Object.values(obj);
       const len = values.length;
