@@ -87,6 +87,52 @@ class Typy {
     if (this.input) return true;
     return false;
   }
+  
+  // eslint-disable-next-line class-methods-use-this
+  get isTruthyShallow() {
+    const values = Object.values(this.input);
+    const tracker = {
+      count: 0,
+    };
+    const len = values.length;
+    for (let i = 0; i < len; i += 1) {
+      if (!!values[i] === false) {
+        /* istanbul ignore next */
+        tracker.count += 1;
+      }
+    }
+    if (tracker.count > 0) {
+      /* istanbul ignore next */
+      return false;
+    }
+    return true;
+  }
+
+  get isTruthyDeep() {
+    const tracker = {
+      count: 0,
+    };
+    // eslint-disable-next-line no-underscore-dangle
+    const t = (input, objectPath) => new Typecheck().t(input, objectPath);
+    function deepCheck(obj) {
+      const values = Object.values(obj);
+      const len = values.length;
+      for (let i = 0; i < len; i += 1) {
+        if (t(values[i]).isObject || t(values[i]).isArray) {
+          deepCheck(values[i]);
+        } else if (!!values[i] === false) {
+          /* istanbul ignore next */
+          tracker.count += 1;
+        }
+      }
+    }
+    deepCheck(this.input);
+    if (tracker.count > 0) {
+      /* istanbul ignore next */
+      return false;
+    }
+    return true;
+  }
 
   get isFalsy() {
     if (!this.input) return true;
