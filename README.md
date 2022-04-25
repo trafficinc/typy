@@ -102,6 +102,8 @@ const myObj = t(deepObj, 'badKey.goodKey').safeObject; // => undefined
   - [isTrue](#istrue)
   - [isFalse](#isfalse)
   - [isTruthy](#istruthy)
+  - [isTruthyDeep](#istruthydeep)
+  - [isTruthyShallow](#istruthyshallow)
   - [isFalsy](#isfalsy)
   - [isObject](#isobject)
   - [isEmptyObject](#isemptyobject)
@@ -242,6 +244,68 @@ t('Typy is amazing =)').isTruthy // => true
 t({}).isTruthy // => true
 t(22).isTruthy // => true
 t([1, 'two']).isTruthy // => true
+```
+
+#### isTruthyShallow
+
+Returns _true_ if the object values are considered _truthy_.
+
+In JavaScript anything other than `false`, `0`, `''`, `""`, `null`, `undefined` and `NaN` is considered _truthy_. `isTruthyshallow` checks shallow objects for truthy.
+
+```js
+const nonTruthyObj = {
+  foo: 'foo',
+  bar: null,
+  foz: 0,
+  bur: '',
+  zur: 23,
+};
+t(nonTruthyObj).isTruthyShallow // => false
+
+const truthyObj = {
+  foo: 'foo',
+  bar: 'bar',
+  foz: 1,
+  bur: 'bur',
+  zur: 23,
+};
+t(truthyObj).isTruthyShallow // => true
+```
+
+#### isTruthyDeep
+
+Returns _true_ if the object values are considered _truthy_.
+
+In JavaScript anything other than `false`, `0`, `''`, `""`, `null`, `undefined` and `NaN` is considered _truthy_. `isTruthyshallow` checks deep objects (objects or arrays in object) for truthy.
+
+```js
+const truthyDeepObjOk = {
+  foo: 'foo',
+  bar: '456',
+  test: 'iam',
+  make: 'tkaen',
+  tester: ['hello', 'fgf', 'now'],
+  mock: {
+    name: 'Kevin',
+    age: 34,
+    salary: '$45,000'
+  }
+};
+t(truthyDeepObjOk).isTruthyDeep // => true
+
+const truthyDeepObjError = {
+  foo: 'foo',
+  bar: '456',
+  test: false,
+  make: 'tkaen',
+  tester: ['hello', null, 'now'],
+  mock: {
+    name: 'Kevin',
+    age: 0,
+    salary: '$45,000'
+  }
+};
+t(truthyDeepObjError).isTruthyDeep // => false
 ```
 
 #### isFalsy
