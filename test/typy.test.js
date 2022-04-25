@@ -94,6 +94,32 @@ describe('Typy', () => {
       });
     });
   });
+  
+  describe('shallow & deep Truthy', () => {
+    test('should test if object is shallow truthy', () => {
+      const truthyObject = {
+        hi: 'world',
+        name: 'Jest',
+        age: 99,
+      };
+
+      expect(t(truthyObject).isTruthyShallow === true).toBeTruthy();
+    });
+
+    test('should test if object is deep truthy', () => {
+      const truthyObject = {
+        name: 'Jest',
+        tester: ['hello', 'world', 'now'],
+        mock: {
+          name: 'Kevin',
+          age: 34,
+          salary: '$45,000'
+        }
+      };
+
+      expect(t(truthyObject).isTruthyDeep === true).toBeTruthy();
+    });
+  });
 
   describe('Type', () => {
     test('should test if type is object', () => {
