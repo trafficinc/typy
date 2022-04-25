@@ -7,9 +7,10 @@ const addCustomTypes = (validators) => {
   if (t(validators).isObject) {
     Object.keys(validators).forEach((validator) => {
       if (t(validators[validator]).isFunction) {
-        // eslint-disable-next-line
-        Typy.prototype.__defineGetter__(validator, function() {
-          return validators[validator](this.input);
+        Object.defineProperty(Typy.prototype, validator, {
+          get() {
+            return validators[validator](this.input);
+          },
         });
       } else {
         throw new Error(`validator ${validator} is not a function`);
